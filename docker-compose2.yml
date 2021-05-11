@@ -17,6 +17,7 @@ owncloud:
     - /media/externalhd/owncloud/config:/var/www/html/config
     - /media/externalhd/owncloud/data/data:/var/www/html/data
 postgres:
+  container_name: postgresserver
   image: postgres:9.6
   environment:
     - POSTGRES_USER=sa
