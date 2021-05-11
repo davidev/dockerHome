@@ -1,0 +1,25 @@
+version: '2.1'
+
+services:
+
+  owncloud:
+    container_name: owncloud
+	image: owncloud
+    restart: always
+	environment:
+	- PUID=1000
+	- PGID=1000
+    ports:
+      - 8084:80
+	links:
+	- postgres:owncloud-db
+    volumes:
+      - /media/externalhd/owncloud/data:/var/www/html
+      - /media/externalhd/owncloud/apps:/var/www/html/apps
+      - /media/externalhd/owncloud/config:/var/www/html/config
+      - /media/externalhd/owncloud/data/data:/var/www/html/data
+postgres:
+  image: postgres:9.6
+  environment:
+    - POSTGRES_USER=sa
+    - POSTGRES_PASSWORD=Ibanez135135.. 
