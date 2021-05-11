@@ -1,7 +1,3 @@
-version: '2.1'
-
-services:
-
 owncloud:
   container_name: owncloud
   image: owncloud
@@ -16,9 +12,12 @@ owncloud:
     - /media/externalhd/owncloud/apps:/var/www/html/apps
     - /media/externalhd/owncloud/config:/var/www/html/config
     - /media/externalhd/owncloud/data/data:/var/www/html/data
+
 postgres:
   container_name: postgresserver
   image: postgres:9.6
+  volumes:
+  - /media/externalhd/postgres/data:/var/lib/postgresql/data
   environment:
-    - POSTGRES_USER=sa
-    - POSTGRES_PASSWORD=Ibanez135135..
+  - POSTGRES_USER=sa
+  - POSTGRES_PASSWORD=Ibanez135135..
