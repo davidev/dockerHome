@@ -1,23 +1,40 @@
-owncloud:
-  container_name: owncloud
-  image: owncloud
-  restart: always
-  environment:
+version: '2.1'
+
+services:
+  owncloud:
+    container_name: owncloud
+    image: owncloud
+    restart: always
+    environment:
     - PUID=1000
     - PGID=1000
-  ports:
-      - 8084:80
-  volumes:
+    ports:
+    - 8084:80
+    links:
+    - postgres:owncloud-db
+    volumes:
     - /media/externalhd/owncloud/data:/var/www/html
     - /media/externalhd/owncloud/apps:/var/www/html/apps
     - /media/externalhd/owncloud/config:/var/www/html/config
     - /media/externalhd/owncloud/data/data:/var/www/html/data
-
-postgres:
-  container_name: postgresserver
-  image: postgres:9.6
-  volumes:
-  - /media/externalhd/postgres/data:/var/lib/postgresql/data
-  environment:
-  - POSTGRES_USER=sa
-  - POSTGRES_PASSWORD=Ibanez135135..
+        
+  postgres:
+    container_name: postgresserver
+    image: postgres:9.6
+    volumes:
+    - /media/externalhd/postgres/data:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_USER=sa
+    - POSTGRES_PASSWORD=Ibanez135135..
+   
+  kerberos:
+    container_name: kerberos_nvr
+    image: kerberos/kerberos
+    ports:
+    - 9010:80
+    - 9011:8889
+    volumes:
+    - /media/externalhd/kerberos/config:/etc/opt/kerberosio/config
+    - /media/externalhd/kerberos/capture:/etc/opt/kerberosio/capture
+    - /media/externalhd/kerberos/logs:/etc/opt/kerberosio/logs
+    - /media/externalhd/kerberos/webconfig:/var/www/web/config
